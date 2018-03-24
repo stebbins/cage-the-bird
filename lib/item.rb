@@ -17,18 +17,9 @@ class Item
   end
 
   def erase
+    puts "Undoing #{@backlog.size} #{self.class}.."
     client.erase(self)
     @backlog = []
-  end
-
-  private
-
-  def initialize_method
-    must_define_in_child('initialize_method')
-  end
-
-  def must_define_in_child(method)
-    raise NoMethodError, message: "You must define #{method} for #{self.class}"
   end
 end
 

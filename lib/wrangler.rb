@@ -16,6 +16,7 @@ class Wrangler
         begin
           wrangler.pull
           wrangler.erase
+          sleep(5)
         rescue NoTweetsError
           break
         end

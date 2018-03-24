@@ -40,6 +40,10 @@ class TwitterAdapter
     end
   end
 
+  def username
+    self.client.user.name
+  end
+
   private
 
   def config_error_message
