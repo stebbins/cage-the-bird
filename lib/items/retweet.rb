@@ -1,0 +1,2 @@
+class Retweet < Item
+end 

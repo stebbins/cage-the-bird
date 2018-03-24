@@ -1,0 +1,2 @@
+class RetweetWrangler < Wrangler
+end

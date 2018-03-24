@@ -1,0 +1,2 @@
+class TweetWrangler < Wrangler
+end

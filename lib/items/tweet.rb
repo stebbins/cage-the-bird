@@ -1,0 +1,2 @@
+class Tweet < Item
+end
