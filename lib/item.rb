@@ -17,7 +17,7 @@ class Item
   end
 
   def erase
-    puts "Undoing #{@backlog.size} #{self.class}.."
+    puts "Undoing #{self.class}.."
     client.erase(self)
     @backlog = []
   end
