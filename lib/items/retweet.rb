@@ -1,2 +1,0 @@
-class Retweet < Item
-end 

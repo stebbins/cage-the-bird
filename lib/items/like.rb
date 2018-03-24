@@ -1,2 +1,0 @@
-class Like < Item
-end 

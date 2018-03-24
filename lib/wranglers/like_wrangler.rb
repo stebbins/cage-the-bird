@@ -1,2 +1,0 @@
-class LikeWrangler < Wrangler
-end 

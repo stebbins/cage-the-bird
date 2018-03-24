@@ -1,2 +1,0 @@
-class TweetWrangler < Wrangler
-end
