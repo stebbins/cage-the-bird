@@ -18,9 +18,10 @@ Installation
 ------------
 
 1. Clone into the Cage the Bird repo and enter the project directory
-2. Create a new [Twitter App](https://apps.twitter.com/) (The name, description, and website don't matter)
-3. Go to 'Keys and Access Tokens' and hit 'Create my access token' under the 'Your Access Token' section
-4. Create a `config.yml` file in the project directory with your Consumer Key, Consumer Secret, Access Token, and Access Token Secret (You can find an example `config.yml` file in `example_config.yml`)
+2. Run `bundle install` in the project directory
+3. Create a new [Twitter App](https://apps.twitter.com/) (The name, description, and website don't matter)
+4. Go to 'Keys and Access Tokens' and hit 'Create my access token' under the 'Your Access Token' section
+5. Create a `config.yml` file in the project directory with your Consumer Key, Consumer Secret, Access Token, and Access Token Secret (You can find an example `config.yml` file in `example_config.yml`)
 
 Contribute
 ----------
