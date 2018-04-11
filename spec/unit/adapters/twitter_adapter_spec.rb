@@ -1,49 +1,33 @@
-# TODO: figure out a way to mock twitter responses
+require './spec/support/fake_client'
 
 RSpec.describe TwitterAdapter do
-  describe 'initialization' do
-    it 'valid with good config.yml' do
-      config = './spec/support/configs/good_config.yml'
-      config = './config.yml'
-      data = YAML.load_file(config)
-
-      expect { TwitterAdapter.new(data) }.to_not raise_error
-    end
-
-    it 'invalid with bad config.yml' do
-      config = './spec/support/configs/bad_config.yml'
-      data = YAML.load_file(config)
-
-      expect { TwitterAdapter.new(data) }.to raise_error(ArgumentError)
-    end
-  end
-
   describe '.pull' do
-    it 'pulls likes' do
-      likes = Likes.new(TWITTER_CLIENT)
+    before(:each) do
+      @adapter = TwitterAdapter.new(FakeClient, '')
+    end
 
-      results = TWITTER_CLIENT.pull(likes)
+    it 'pulls likes' do
+      likes = Likes.new(@adapter)
+
+      results = @adapter.pull(likes)
 
       expect(results.class).to eq(Array)
-      expect(results).to include(instance_of(Twitter::Tweet))
     end
 
     it 'pulls retweets' do
-      retweets = Retweets.new(TWITTER_CLIENT)
+      retweets = Retweets.new(@adapter)
 
-      results = TWITTER_CLIENT.pull(retweets)
+      results = @adapter.pull(retweets)
 
       expect(results.class).to eq(Array)
-      expect(results).to include(instance_of(Twitter::Tweet))
     end
 
     it 'pulls tweets' do
-      tweets = Tweets.new(TWITTER_CLIENT)
+      tweets = Tweets.new(@adapter)
 
-      results = TWITTER_CLIENT.pull(tweets)
+      results = @adapter.pull(tweets)
 
       expect(results.class).to eq(Array)
-      expect(results).to include(instance_of(Twitter::Tweet))
     end
   end
 end

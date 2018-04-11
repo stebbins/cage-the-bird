@@ -2,12 +2,13 @@ class Wrangler
   attr_accessor :wranglers
   attr_reader :client
 
-  def initialize(targets, client = TWITTER_CLIENT)
-    @client = client
+  def initialize(params)
+    @client = params[:client] 
 
     # Normalize initialization variable if array isn't passed
+    targets = params[:targets]
     targets = [targets] unless targets.class == Array
-    @wranglers = targets.map { |t| wrangle(t) }
+    @wranglers = targets.map { |t| convert_to_class(t) }
   end
 
   def clear
@@ -27,7 +28,7 @@ class Wrangler
   private
 
   # Converts a symbol into a new class instance
-  def wrangle(item)
+  def convert_to_class(item)
     normalized_string = item.to_s.capitalize
     eval(normalized_string).new(client)
   end

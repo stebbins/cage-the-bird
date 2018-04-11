@@ -3,9 +3,9 @@ require 'twitter'
 class TwitterAdapter
   attr_reader :client, :user
 
-  def initialize(data)
+  def initialize(client_class, data)
     begin
-      @client = Twitter::REST::Client.new do |config|
+      @client = client_class.new do |config|
         config.consumer_key         = data[:consumer_key]
         config.consumer_secret      = data[:consumer_secret]
         config.access_token         = data[:access_token]
@@ -13,7 +13,7 @@ class TwitterAdapter
       end
       @user = client.user
     rescue
-      raise ArgumentError, message: config_error_message
+      raise ArgumentError, "Something's wrong with your config.yaml file!"
     end
   end
 
@@ -43,11 +43,4 @@ class TwitterAdapter
   def username
     self.client.user.name
   end
-
-  private
-
-  def config_error_message
-    "Something's wrong with your config.yaml file!"
-  end
-
 end

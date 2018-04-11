@@ -2,8 +2,12 @@ RSpec.describe Wrangler do
 
   describe '.wranglers' do
     context 'creates array of wranglers' do
+      before(:each) do
+        @client = TwitterAdapter.new(FakeClient, '')
+      end
+
       it 'with one target' do
-        wrangler = Wrangler.new(:tweets)
+        wrangler = Wrangler.new(targets: [:tweets], client: @client)
 
         result = wrangler.wranglers
 
@@ -13,7 +17,7 @@ RSpec.describe Wrangler do
       end
 
       it 'with multiple targets' do
-        wrangler = Wrangler.new([:tweets, :likes])
+        wrangler = Wrangler.new(targets: [:tweets, :likes], client: @client)
 
         result = wrangler.wranglers
 

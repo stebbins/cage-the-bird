@@ -2,24 +2,26 @@ require 'yaml'
 require 'require_all'
 require_all 'lib'
 
-
-data = YAML.load_file('config.yml')
-
 def start_app(client)
   puts "Loaded #{client.username}."
   puts "What do you want to purge?"
   puts "(You can enter multiple separated by a space)"
   puts "Options: likes retweets tweets all"
   print '> '
+
   wranglers = gets.chomp.split
   wranglers = ['likes', 'retweets', 'tweets'] if wranglers.include?('all')
-  cage = Wrangler.new(wranglers)
+
+  cage = Wrangler.new(targets: wranglers, client: client)
+
   puts "Loaded..."
   puts "To continue, type 'yes' without quotes."
   puts "Any other input will cancel the process."
   puts "You can press Ctrl+C during the process to terminate, as well."
   print '> '
+
   purge_confirmation = gets.chomp
+
   if purge_confirmation == 'yes'
     puts "Beginning purge, this may take a moment."
     cage.clear
@@ -30,8 +32,10 @@ def start_app(client)
 end
 
 begin
-  TWITTER_CLIENT = TwitterAdapter.new(data)
-  start_app(TWITTER_CLIENT)
+  data = YAML.load_file('config.yml')
+  client = TwitterAdapter.new(Twitter::REST::Client, data)
+  
+  start_app(client)
 rescue ArgumentError
   puts "It looks like you need to properly configure your ./config.yml file"
   puts "with API authorization details from Twitter."
