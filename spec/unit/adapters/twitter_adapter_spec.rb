@@ -3,7 +3,7 @@
 RSpec.describe TwitterAdapter do
   describe 'initialization' do
     it 'valid with good config.yml' do
-      # config = './spec/support/configs/good_config.yml'
+      config = './spec/support/configs/good_config.yml'
       config = './config.yml'
       data = YAML.load_file(config)
 
