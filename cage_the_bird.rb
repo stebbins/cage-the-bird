@@ -1,4 +1,7 @@
 require 'yaml'
+
+require 'pry'
+
 require 'require_all'
 require_all 'lib'
 
@@ -15,6 +18,15 @@ def start_app(client)
   cage = Wrangler.new(targets: wranglers, client: client)
 
   puts "Loaded..."
+
+  # Look, this whole thing is ugly, so don't start making fun of me
+  # here. It's either "fix this in 5 minutes" or "leave it all broken"
+  puts "enter id for 'purge all tweets, this one and older':"
+  print '> '
+
+  id = gets.chomp.to_i
+  $max_tweet_id = id == 0 ? nil : id
+
   puts "To continue, type 'yes' without quotes."
   puts "Any other input will cancel the process."
   puts "You can press Ctrl+C during the process to terminate, as well."
@@ -34,7 +46,7 @@ end
 begin
   data = YAML.load_file('config.yml')
   client = TwitterAdapter.new(Twitter::REST::Client, data)
-  
+
   start_app(client)
 rescue ArgumentError
   puts "It looks like you need to properly configure your ./config.yml file"

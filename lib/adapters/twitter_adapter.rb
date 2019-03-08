@@ -22,21 +22,32 @@ class TwitterAdapter
     when Likes
       client.favorites(count: 100)
     when Retweets
-      client.retweeted_by_me(count: 200)
+      params = { count: 200 }
+      params.merge!(max_id: $max_tweet_id) if $max_tweet_id
+      client.retweeted_by_me(params)
     when Tweets
-      client.user_timeline(user, count: 200, include_rts: false)
+      params = {
+        count: 200,
+        include_rts: false
+      }
+      params.merge!(max_id: $max_tweet_id) if $max_tweet_id
+      client.user_timeline(user, params)
     end
   end
 
   def erase(item)
     tweets = item.backlog
-    case item
-    when Likes
-      client.unfavorite(tweets)
-    when Retweets
-      client.unretweet(tweets)
-    when Tweets
-      client.destroy_status(tweets)
+    tweets.each do |tweet|
+      case item
+      when Likes
+        client.unfavorite(tweet)
+      when Retweets
+        client.unretweet(tweet)
+      when Tweets
+        client.destroy_status(tweet)
+      end
+    rescue StandardError => e
+      puts "error, skipping. #{e.inspect}"
     end
   end
 
